@@ -1,0 +1,94 @@
+# Load data table package
+library("data.table")
+# alternative: library(dplyr)... see below
+
+# as needed: dev.new()
+
+# Download data and unzip
+path <- getwd()
+url <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
+download.file(url, file.path(path, "dataFiles.zip"))
+unzip(zipfile = "dataFiles.zip")
+
+# Reads in data from file, interpret ? as NA values
+powerDT <- data.table::fread(input = "household_power_consumption.txt"
+                             , na.strings="?"
+)
+
+# Handle .SD and data types (see plot1.R)
+
+# Convert energy sub-metering No. 1 (in watt-hour of active energy) kitchen
+powerDT[, Sub_metering_1 := lapply(.SD, as.numeric), .SDcols = c("Sub_metering_1")]
+# Convert energy sub-metering No. 2 (in watt-hour of active energy) laundry room
+powerDT[, Sub_metering_2 := lapply(.SD, as.numeric), .SDcols = c("Sub_metering_2")]
+# Convert energy sub-metering No. 3 (in watt-hour of active energy) heat & AC
+powerDT[, Sub_metering_3 := lapply(.SD, as.numeric), .SDcols = c("Sub_metering_3")]
+
+# Convert Date and Time columns from character to POSIXct and format as new variable
+powerDT[, dateTime := as.POSIXct(paste(Date, Time), format = "%d/%m/%Y %H:%M:%S")]
+
+# Subset dateTime column for 2007-02-01 to 2007-02-02 to decrease memory usage
+powerDT <- powerDT[(dateTime >= "2007-02-01") & (dateTime <= "2007-02-03")]
+
+# Convert dateTime to weekday abbreviation
+powerDT[, Day := weekdays.POSIXt(dateTime, abbreviate = TRUE)]
+
+# Activate png device of specified width 480 pixels and height 480 pixels
+png("plot3.png", width=480, height=480)
+
+## Plot 3: Construct per course project example
+
+# Create location input for axis labels (seq to and from arguments)
+dateRange <- c(min(powerDT[, dateTime]), max(powerDT[, dateTime]))
+# [1] "2007-02-01 MST" "2007-02-03 MST"
+
+# Plot with dateTime to obtain continuous variable & legend
+# with axis label suppression & custom x-tick labels (see plot2.R)
+
+plot(x = powerDT[, dateTime]
+     , y = powerDT[, Sub_metering_1]
+     , type="l"
+     , col = "black"
+     , ylab="" # don't automatically title y-axis 
+     , xlab="" # don't automatically title x-axis 
+     , xaxt = "n") # don't plot x-axis tick labels 
+
+lines(x = powerDT[, dateTime]
+     , y = powerDT[, Sub_metering_2]
+     , type="l"
+     , col = "red"
+     , ylab="" 
+     , xlab=""  
+     , xaxt = "n") 
+
+lines(x = powerDT[, dateTime]
+     , y = powerDT[, Sub_metering_3]
+     , type="l"
+     , col = "blue"
+     , ylab="" 
+     , xlab="" 
+     , xaxt = "n") 
+
+# Label y-axis
+title(ylab = "Energy sub metering")
+
+# Label custom x-axis with day of the week abbreviations
+axis.POSIXct(1, at = seq(dateRange[1], dateRange[2], by = "day"), format = "%a")
+
+# Add legend
+legend("topright"
+       , lty = 1
+       , col = c("black", "red", "blue")
+       , legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
+
+# Close png device and save plot1.png file in working directory
+dev.off() # plot3.png created and available for viewing
+
+# Note: 
+# Contributors: Roger Peng, William Revelle & Michael Galarnyk
+# Alternative: library(dplyr)
+# powerDT <- read.table("household_power_consumption.txt", sep=";", header=TRUE, as.is=TRUE, na.strings = "?")
+# powerDT$DateTime <- paste(DT$Date, DT$Time)
+# powerDT$DateTime <- strptime(DT$DateTime, format="%d/%m/%Y %H:%M:%S")
+# powerDT <- filter(DT, DateTime >= "2007-02-01" & DateTime <= "2007-02-03")
+# plot(DT$DateTime, DT$Global_active_power, type="l") 
