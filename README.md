@@ -94,19 +94,19 @@ The four plots that you will need to construct are shown below.
 
 
 ### Plot 1
-![URL or file path](https://github.com/rdpeng/ExData_Plotting1/blob/master/figure/unnamed-chunk-2.png)
+![](https://github.com/rdpeng/ExData_Plotting1/blob/master/figure/unnamed-chunk-2.png)
 
 ### Plot 2
 
-![](figure/unnamed-chunk-3.png) 
+![](https://github.com/rdpeng/ExData_Plotting1/blob/master/figure/unnamed-chunk-3.png) 
 
 
 ### Plot 3
 
-![](figure/unnamed-chunk-4.png) 
+![](https://github.com/rdpeng/ExData_Plotting1/blob/master/figure/unnamed-chunk-4.png)
 
 
 ### Plot 4
 
-![](figure/unnamed-chunk-5.png) 
+![](https://github.com/rdpeng/ExData_Plotting1/blob/master/figure/unnamed-chunk-5.png)
 
