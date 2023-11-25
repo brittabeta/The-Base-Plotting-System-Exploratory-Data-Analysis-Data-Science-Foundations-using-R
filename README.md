@@ -50,6 +50,7 @@ memory (most modern computers should be fine).
 2007-02-02. One alternative is to read the data from just those dates
 rather than reading in the entire dataset and subsetting to those
 dates.
+**may require 2007-02-03 as well to match Peng's plots**
 
 * You may find it useful to convert the Date and Time variables to
 Date/Time classes in R using the `strptime()` and `as.Date()`
