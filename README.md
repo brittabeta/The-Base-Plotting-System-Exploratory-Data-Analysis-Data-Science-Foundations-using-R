@@ -1,7 +1,6 @@
 ## Introduction
 
-(![image](https://github.com/brittabeta/The-Base-Plotting-System-Exploratory-Data-Analysis-Data-Science-Foundations-using-R/assets/110415464/2f8653f7-1ecc-4d39-ba06-340aa90e9162)
-
+![image](https://github.com/brittabeta/The-Base-Plotting-System-Exploratory-Data-Analysis-Data-Science-Foundations-using-R/assets/110415464/2f8653f7-1ecc-4d39-ba06-340aa90e9162)
 
 This assignment uses data from
 the <a href="http://archive.ics.uci.edu/ml/">UC Irvine Machine
